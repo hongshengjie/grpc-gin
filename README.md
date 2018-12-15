@@ -1,5 +1,5 @@
 # grpc-gin
-proto grpc gin plugin , use the proto files  to generate gin web interface
+proto grpc gin plugin , use the proto files  to generate gin web handers
 
 ## install
 ```
@@ -80,7 +80,7 @@ func (s *GreeterGinServer) RegisterGreeterHander(e *gin.Engine) {
 ```
 
 
-you can use the generated web interface like this
+you can use the generated web handers like this
 
 ```
 r := gin.Default()
