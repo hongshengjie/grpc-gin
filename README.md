@@ -34,69 +34,6 @@ protoc -I helloworld/ helloworld/helloworld.proto --go_out=plugins=grpc+webapi:h
 the generated file  will be added below code
 
 ```
-// GreeterServer is the server API for Greeter service.
-type GreeterServer interface {
-	// Sends a greeting
-	SayHello(context.Context, *HelloRequest) (*HelloReply, error)
-	Echo(context.Context, *EchoReq) (*EchoResp, error)
-}
-
-func RegisterGreeterServer(s *grpc.Server, srv GreeterServer) {
-	s.RegisterService(&_Greeter_serviceDesc, srv)
-}
-
-func _Greeter_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GreeterServer).SayHello(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/helloworld.Greeter/SayHello",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GreeterServer).SayHello(ctx, req.(*HelloRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Greeter_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EchoReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GreeterServer).Echo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/helloworld.Greeter/Echo",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GreeterServer).Echo(ctx, req.(*EchoReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _Greeter_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "helloworld.Greeter",
-	HandlerType: (*GreeterServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "SayHello",
-			Handler:    _Greeter_SayHello_Handler,
-		},
-		{
-			MethodName: "Echo",
-			Handler:    _Greeter_Echo_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "helloworld/helloworld.proto",
-}
 
 type GreeterGinServer struct {
 	GServer GreeterServer
@@ -152,6 +89,8 @@ s.RegisterGreeterHander(r)
 r.Run(":8080")
 
 ```
+
+Now you can use postman to debug you grpc servers
 
 
 
